@@ -41,7 +41,7 @@ extern "C" {
     tsetlin_feedback_t* tsetlin_step(tsetlin_t* ts, const int* X, int y_target, int T, double s, tsetlin_feedback_t* out_feedback, int threshold);
 
     /* Fit over dataset X (array of n_samples pointers to int arrays) and labels y (length n_samples). */
-    void tsetlin_fit(tsetlin_t* ts, int** X, const int* y, int n_samples, int T, double s, int epochs);
+    void tsetlin_fit(tsetlin_t* ts, const int** X, const int* y, int n_samples, int T, double s, int epochs);
 
 #ifdef __cplusplus
 }
