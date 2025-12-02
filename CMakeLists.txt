@@ -23,9 +23,12 @@ target_link_libraries(main
 	PRIVATE tsetlin
 )
 
-enable_testing()
+configure_file(${CMAKE_SOURCE_DIR}/iris.csv
+               ${CMAKE_BINARY_DIR}/iris.csv
+               COPYONLY)
 
 # Enable Unit testing
+enable_testing()
 include(CTest)
 
 # Add tests folder
