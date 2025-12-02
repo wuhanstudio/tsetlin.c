@@ -8,12 +8,9 @@
 #include <unity.h>
 #include <log.h>
 
-#include <stdlib.h> /* srand */
 #include <clause.h>
 
 void setUp(void) {
-    /* Match Python's deterministic randomness used in tests */
-    srand(0);
 }
 
 void tearDown(void) {

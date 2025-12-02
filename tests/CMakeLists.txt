@@ -19,4 +19,4 @@ target_link_libraries(unit_test_clause
 
 # Register test with CTest
 add_test(NAME unit_test_automaton COMMAND unit_test_automaton)
-add_test(NAME unit_test_clause COMMAND unit_test_caluse)
+add_test(NAME unit_test_clause COMMAND unit_test_clause)
