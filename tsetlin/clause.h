@@ -1,10 +1,7 @@
-#ifndef TSETLIN_CLAUSE_H
-#define TSETLIN_CLAUSE_H
+#ifndef TSETLIN_CLAUSE_INT_H
+#define TSETLIN_CLAUSE_INT_H
 
 #include <stdbool.h>
-#include <stddef.h>
-
-#include "automaton.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -14,58 +11,54 @@ extern "C" {
         int N_feature;
         int N_states;
         int N_literals;
+        int middle;
 
-        automaton_t** p_automata; /* array length N_feature */
-        automaton_t** n_automata; /* array length N_feature */
+        /* integer states for positive and negative literals */
+        int* p_states; /* length N_feature */
+        int* n_states; /* length N_feature */
 
-        /* Included literal index lists (built by compress). */
+        /* compressed index lists */
         int* p_included_idxs;
         int p_included_count;
         int* n_included_idxs;
         int n_included_count;
 
-        /* Trainable literal index lists (optional, when threshold >= 0). */
         int* p_trainable_idxs;
         int p_trainable_count;
         int* n_trainable_idxs;
         int n_trainable_count;
     } clause_t;
 
-    /* Allocate and initialize a clause. Caller must free with clause_free(). */
+    /* Allocate and initialize; caller must free with clause_int_free(). */
     clause_t* clause_new(int N_feature, int N_states);
 
-    /* Free clause and owned automata and internal arrays. */
+    /* Free clause created by clause_int_new(). */
     void clause_free(clause_t* c);
 
-    /* Rebuild included and trainable index arrays. If threshold < 0, trainable lists are cleared. */
+    /* Rebuild included/trainable index lists. threshold < 0 disables trainable lists. */
     void clause_compress(clause_t* c, int threshold);
 
-    /* Evaluate clause on input X (array length N_feature). Returns 1 or 0. */
+    /* Evaluate clause on X (array length N_feature). Returns 1 or 0. */
     int clause_evaluate(const clause_t* c, const int* X);
 
     /*
-     * Update clause according to algorithm.
-     * X: input feature array length N_feature (values 0 or 1)
-     * match_target: 1 for Type I feedback, 0 for Type II
-     * clause_output: clause evaluation result (0 or 1)
-     * s: parameter s (>1) controlling probabilities
-     * threshold: optional threshold for trainable automata (-1 means disabled)
-     * Returns number of automata feedback events applied.
+     * Update clause using integer-state feedback rules.
+     * match_target: 1 => Type I feedback, 0 => Type II feedback.
+     * clause_output: current clause output (0/1).
+     * s: specificity parameter (>1 normally).
+     * threshold: optional threshold for trainable literals (-1 disables).
+     * Returns number of feedback operations applied.
      */
     int clause_update(clause_t* c, const int* X, int match_target, int clause_output, double s, int threshold);
 
-    /* Set automata states from states array length 2 * N_feature.
-     * states[0..N_feature-1] -> p_automata states
-     * states[N_feature..2*N_feature-1] -> n_automata states
-     * threshold passed to compress(). */
+    /* Set states from array length 2*N_feature (p_states then n_states). */
     void clause_set_state(clause_t* c, const int* states, int threshold);
 
-    /* Get current states. Returns a newly allocated array of length 2 * N_feature.
-     * Caller must free the returned pointer. */
+    /* Get pointer to newly allocated states array length 2*N_feature (caller frees). */
     int* clause_get_state(const clause_t* c);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* TSETLIN_CLAUSE_H */
+#endif /* TSETLIN_CLAUSE_INT_H */
