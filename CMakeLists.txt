@@ -23,6 +23,13 @@ target_link_libraries(main
 	PRIVATE tsetlin
 )
 
+# Cross-platform math library linking
+if (UNIX)
+    # On Linux/macOS, link libm for math functions
+    target_link_libraries(main m)
+endif()
+# On Windows (MSVC), math functions are already in the runtime, no extra linking needed
+
 configure_file(${CMAKE_SOURCE_DIR}/iris.csv
                ${CMAKE_BINARY_DIR}/iris.csv
                COPYONLY)
