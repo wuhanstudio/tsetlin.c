@@ -4,8 +4,9 @@
 
 
 add_library(tsetlin STATIC
-    "tsetlin.c" "tsetlin.h"
-    "automaton.h" "automaton.c"
+ "tsetlin.c" "tsetlin.h"
+ "automaton.h" "automaton.c"  
+ "clause.h" "clause.c"
 )
 
 target_include_directories(tsetlin PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})

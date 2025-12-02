@@ -10,6 +10,7 @@ static int _compute_action(int state, int middle_state) {
 void automaton_init(automaton_t* a, int N_state, int state) {
     assert(a != NULL);
     assert((N_state % 2) == 0); /* N_state must be even */
+
     a->N_state = N_state;
     a->middle_state = N_state / 2;
     a->state = state;
@@ -19,6 +20,7 @@ void automaton_init(automaton_t* a, int N_state, int state) {
 automaton_t* automaton_new(int N_state, int state) {
     automaton_t* a = (automaton_t*)malloc(sizeof(automaton_t));
     if (!a) return NULL;
+
     automaton_init(a, N_state, state);
     return a;
 }
