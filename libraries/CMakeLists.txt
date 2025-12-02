@@ -12,3 +12,11 @@ add_library(unity STATIC
 target_include_directories(unity PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/Unity/src
 )
+
+add_library(tqdm STATIC
+    tqdm/tqdm.c
+)
+
+target_include_directories(tqdm PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}/tqdm
+)

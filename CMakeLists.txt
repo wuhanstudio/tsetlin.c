@@ -16,6 +16,7 @@ add_subdirectory ("tsetlin")
 add_subdirectory ("libraries")
 
 add_executable(main "main.c" "tsetlin_config.h")
+add_executable(main_mnist "main_mnist.c" "tsetlin_config.h")
 
 # List of libraries
 set(MAIN_LIBS 
@@ -36,8 +37,29 @@ target_link_libraries(main
 	PRIVATE ${MAIN_LIBS}
 )
 
+target_link_libraries(main_mnist 
+	PRIVATE ${MAIN_LIBS} 
+    PRIVATE tqdm
+)
+
 configure_file(${CMAKE_SOURCE_DIR}/iris.csv
                ${CMAKE_BINARY_DIR}/iris.csv
+               COPYONLY)
+
+configure_file(${CMAKE_SOURCE_DIR}/mnist/train-images-idx3-ubyte
+               ${CMAKE_BINARY_DIR}/mnist/train-images-idx3-ubyte
+               COPYONLY)
+
+configure_file(${CMAKE_SOURCE_DIR}/mnist/train-labels-idx1-ubyte
+               ${CMAKE_BINARY_DIR}/mnist/train-labels-idx1-ubyte
+               COPYONLY)
+
+configure_file(${CMAKE_SOURCE_DIR}/mnist/t10k-images-idx3-ubyte
+               ${CMAKE_BINARY_DIR}/mnist/t10k-images-idx3-ubyte
+               COPYONLY)
+
+configure_file(${CMAKE_SOURCE_DIR}/mnist/t10k-labels-idx1-ubyte
+               ${CMAKE_BINARY_DIR}/mnist/t10k-labels-idx1-ubyte
                COPYONLY)
 
 # Enable Unit testing
