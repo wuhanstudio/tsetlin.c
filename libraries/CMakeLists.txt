@@ -20,3 +20,9 @@ add_library(tqdm STATIC
 target_include_directories(tqdm PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/tqdm
 )
+
+# Cross-platform math library linking
+if (UNIX)
+    # On Linux/macOS, link libm for math functions
+    target_link_libraries(tqdm PUBLIC m)
+endif()
