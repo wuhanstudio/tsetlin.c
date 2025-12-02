@@ -4,8 +4,8 @@
 #include <math.h>
 #include <time.h>
 
-#include "tsetlin/tsetlin.h"
-#include "log.h"
+#include <tsetlin.h>
+#include <log.h>
 
 /*
   Simplified standalone implementation of the Python script in C.

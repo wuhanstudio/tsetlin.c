@@ -17,18 +17,24 @@ add_subdirectory ("libraries")
 
 add_executable(main "main.c" "tsetlin_config.h")
 
-# Link to the subfolder libraries
-target_link_libraries(main 
-	PRIVATE log 
-	PRIVATE tsetlin
+# List of libraries
+set(MAIN_LIBS 
+    log
+    tsetlin
 )
 
 # Cross-platform math library linking
 if (UNIX)
     # On Linux/macOS, link libm for math functions
-    target_link_libraries(main m)
+    list(APPEND MAIN_LIBS m)
 endif()
+
 # On Windows (MSVC), math functions are already in the runtime, no extra linking needed
+
+# Link to the subfolder libraries
+target_link_libraries(main 
+	PRIVATE ${MAIN_LIBS}
+)
 
 configure_file(${CMAKE_SOURCE_DIR}/iris.csv
                ${CMAKE_BINARY_DIR}/iris.csv
