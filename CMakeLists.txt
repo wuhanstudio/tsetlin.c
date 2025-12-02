@@ -13,3 +13,20 @@ project ("tsetlin.c")
 
 # Include sub-projects.
 add_subdirectory ("tsetlin")
+add_subdirectory ("libraries")
+
+add_executable(main "main.c" "tsetlin_config.h")
+
+# Link to the subfolder libraries
+target_link_libraries(main 
+	PRIVATE log 
+	PRIVATE tsetlin
+)
+
+enable_testing()
+
+# Enable Unit testing
+include(CTest)
+
+# Add tests folder
+add_subdirectory(tests)

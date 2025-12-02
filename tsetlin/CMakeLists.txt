@@ -2,11 +2,10 @@
 # project specific logic here.
 #
 
-# Add source to this project's executable.
-add_executable (tsetlin "main.c" )
 
-if (CMAKE_VERSION VERSION_GREATER 3.12)
-  set_property(TARGET tsetlin PROPERTY CXX_STANDARD 20)
-endif()
+add_library(tsetlin STATIC
+    "tsetlin.c" "tsetlin.h"
+    "automaton.h" "automaton.c"
+)
 
-# TODO: Add tests and install targets if needed.
+target_include_directories(tsetlin PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})

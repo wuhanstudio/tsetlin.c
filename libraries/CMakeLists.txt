@@ -1,0 +1,14 @@
+add_library(log STATIC
+    log.c/src/log.c
+)
+
+target_compile_definitions(log PUBLIC LOG_USE_COLOR)
+target_include_directories(log PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/log.c/src)
+
+add_library(unity STATIC
+    Unity/src/unity.c
+)
+
+target_include_directories(unity PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}/Unity/src
+)
